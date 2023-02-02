@@ -104,6 +104,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	moveTarget();
+	animateTarget();
 }
 
 /// <summary>
@@ -164,7 +165,8 @@ void Game::setupSprite()
 	m_gumbaSprite.setTexture(m_gumballTexture);
 	m_gumbaSprite.setPosition(m_targetLocation);
 	m_gumbaSprite.setTextureRect(sf::IntRect{ 0,0,52,54 });
-
+	m_gumbaSprite.setScale(-1.0f, 1.0f);
+	m_gumbaSprite.setOrigin(52.0f, 0.0f);
 	
 	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
 	{
@@ -184,11 +186,37 @@ void Game::moveTarget()
 	if (m_targetLocation.x < LEFT_EDGE)
 	{
 		m_targetVelocity.x = SPEED;
+		m_gumbaSprite.setScale(-1.0f, 1.0f);
+		m_gumbaSprite.setOrigin(52.0f, 0.0f);
 	}
 	if (m_targetLocation.x > RIGHT_EDGE)
 	{
 		m_targetVelocity.x = -SPEED;
+		m_gumbaSprite.setScale(1.0f, 1.0f);
+		m_gumbaSprite.setOrigin(0.0f, 0.0f);
 	}
 	m_targetLocation += m_targetVelocity;
 	m_target.setPosition(m_targetLocation);
+	m_gumbaSprite.setPosition(m_targetLocation);
+}
+
+void Game::animateTarget()
+{
+	int frame = 0;
+	const int FRAME_WIDTH = 52;
+	const int FRAME_HEIGHT = 54;
+	
+	m_gumbaFrameCounter += m_gumbaFrameIncrement;
+	frame = static_cast<int>(m_gumbaFrameCounter);
+	if (frame >= GUMBA_FRAMES)
+	{
+		frame = 0;
+		m_gumbaFrameCounter = 0.0f;
+	}
+	if (frame != m_gumbaFrame)
+	{
+		m_gumbaFrame = frame;
+		m_gumbaSprite.setTextureRect(sf::IntRect{ frame * FRAME_WIDTH,0,FRAME_WIDTH, FRAME_HEIGHT });
+
+	}
 }

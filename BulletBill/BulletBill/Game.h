@@ -31,6 +31,7 @@ private:
 	void setupFontAndText();
 	void setupSprite();
 	void moveTarget();
+	void animateTarget();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -46,6 +47,11 @@ private:
 
 	sf::Texture m_gumballTexture; // texture for the gumba
 	sf::Sprite m_gumbaSprite;  // sprite for the gumba
+
+	int m_gumbaFrame{ -1 };
+	const int GUMBA_FRAMES = 20;
+	float m_gumbaFrameCounter = 0.0f;
+	float m_gumbaFrameIncrement = 0.3f;
 
 };
 #endif // !GAME_HPP
