@@ -91,6 +91,10 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
+	if (sf::Keyboard::F1 == t_event.key.code)
+	{
+		m_graphics = !m_graphics;
+	}
 }
 
 /// <summary>
@@ -113,12 +117,17 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
-	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
-
-	m_window.draw(m_wall);
-	m_window.draw(m_target);
-	m_window.draw(m_gumbaSprite);
+	if (m_graphics)
+	{
+		m_window.draw(m_backgropundSprite);
+		m_window.draw(m_wallSprite);
+		m_window.draw(m_gumbaSprite);
+	}
+	else
+	{
+		m_window.draw(m_wall);
+		m_window.draw(m_target);
+	}
 	m_window.display();
 }
 
@@ -147,6 +156,20 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
+	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
+	{
+		std::cout << "problew with background" << std::endl;
+	}
+	m_backgropundSprite.setTexture(m_backgroundTexture);
+
+	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\wall.jpg"))
+	{
+		std::cout << "problem with wall" << std::endl;
+	}
+	m_wallSprite.setTexture(m_wallTexture);
+	m_wallSprite.setPosition(400.0f, 500.0f);
+	m_wallTexture.setRepeated(true);
+	m_wallSprite.setTextureRect(sf::IntRect{ 0,0,32,100 });
 
 	m_wall.setFillColor(sf::Color::Black);
 	m_wall.setSize(sf::Vector2f{ 32.0f,100.0f });

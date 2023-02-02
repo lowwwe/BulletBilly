@@ -47,11 +47,18 @@ private:
 
 	sf::Texture m_gumballTexture; // texture for the gumba
 	sf::Sprite m_gumbaSprite;  // sprite for the gumba
+	sf::Texture m_backgroundTexture;
+	sf::Sprite m_backgropundSprite;
+	sf::Texture m_wallTexture;
+	sf::Sprite m_wallSprite;
 
 	int m_gumbaFrame{ -1 };
 	const int GUMBA_FRAMES = 20;
 	float m_gumbaFrameCounter = 0.0f;
 	float m_gumbaFrameIncrement = 0.3f;
+
+
+	bool m_graphics{ false };// are we in graphics mode
 
 };
 #endif // !GAME_HPP
