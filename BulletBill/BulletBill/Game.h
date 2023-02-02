@@ -27,7 +27,7 @@ private:
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
-	
+
 	void setupFontAndText();
 	void setupSprite();
 	void moveTarget();
@@ -43,7 +43,10 @@ private:
 	sf::RectangleShape m_target;// box for target to fire at
 	sf::Vector2f m_targetLocation; // location of target
 	sf::Vector2f m_targetVelocity{ 0.6f,0.0f }; // velocity of the target
-};
 
+	sf::Texture m_gumballTexture; // texture for the gumba
+	sf::Sprite m_gumbaSprite;  // sprite for the gumba
+
+};
 #endif // !GAME_HPP
 

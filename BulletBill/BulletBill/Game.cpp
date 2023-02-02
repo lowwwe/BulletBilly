@@ -117,6 +117,7 @@ void Game::render()
 
 	m_window.draw(m_wall);
 	m_window.draw(m_target);
+	m_window.draw(m_gumbaSprite);
 	m_window.display();
 }
 
@@ -127,7 +128,7 @@ void Game::setupFontAndText()
 {
 	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
 	{
-		std::cout << "problem loading arial black font" << std::endl;
+		std::cout  << "problem loading arial black font" << std::endl;
 	}
 	m_welcomeMessage.setFont(m_ArialBlackfont);
 	m_welcomeMessage.setString("SFML Game");
@@ -155,6 +156,16 @@ void Game::setupSprite()
 	m_targetLocation = sf::Vector2f{ 420.0f,545.0f };
 
 	m_target.setPosition(m_targetLocation);
+
+	if (!m_gumballTexture.loadFromFile("ASSETS\\IMAGES\\gumba.png"))
+	{
+		std::cout << "problem loading gumba texture" << std::endl;
+	}
+	m_gumbaSprite.setTexture(m_gumballTexture);
+	m_gumbaSprite.setPosition(m_targetLocation);
+	m_gumbaSprite.setTextureRect(sf::IntRect{ 0,0,52,54 });
+
+	
 	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
 	{
 		// simple error message if previous call fails
