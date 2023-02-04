@@ -167,6 +167,7 @@ void Game::render()
 	else
 	{
 		m_window.draw(m_canon);
+		m_window.draw(m_ball);
 		m_window.draw(m_wall);
 		if (m_aiming)
 		{
@@ -202,6 +203,13 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
+	m_ball.setFillColor(sf::Color::Red);
+	m_ball.setRadius(10.0f);
+	m_ball.setOrigin(10.0f, 10.0f);
+
+	m_ball.setPosition(100.0f, 550.0f);
+
+
 	m_canon.setFillColor(sf::Color::Black);
 	m_canon.setSize(sf::Vector2f{ 20.0f,70.0f });
 	m_canon.setPosition(100.0f,550.0f);
