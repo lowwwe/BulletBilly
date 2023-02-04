@@ -25,6 +25,9 @@ private:
 
 	void processEvents();
 	void processKeys(sf::Event t_event);
+	void processMouseDown(sf::Event t_event);
+	void processMouseMove(sf::Event t_event);
+	void procerssMouseUP(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
 
@@ -32,6 +35,8 @@ private:
 	void setupSprite();
 	void moveTarget();
 	void animateTarget();
+	void setAimLine();
+
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -51,6 +56,13 @@ private:
 	sf::Sprite m_backgropundSprite;
 	sf::Texture m_wallTexture;
 	sf::Sprite m_wallSprite;
+
+	sf::RectangleShape m_canon;
+	sf::Vector2f m_mouseEnd;
+	sf::Vector2f m_canonEnd{ 100.0f,550.0f };
+
+	sf::VertexArray m_aimLine{ sf::Lines }; // line to show path
+	bool m_aiming{ false }; // are we aiming
 
 	int m_gumbaFrame{ -1 };
 	const int GUMBA_FRAMES = 20;
