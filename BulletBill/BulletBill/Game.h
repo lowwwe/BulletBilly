@@ -27,7 +27,7 @@ private:
 	void processKeys(sf::Event t_event);
 	void processMouseDown(sf::Event t_event);
 	void processMouseMove(sf::Event t_event);
-	void procerssMouseUP(sf::Event t_event);
+	void procerssMouseUp(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
 

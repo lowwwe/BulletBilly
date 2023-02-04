@@ -81,6 +81,14 @@ void Game::processEvents()
 		{
 			processMouseDown(newEvent);
 		}
+		if (sf::Event::MouseMoved == newEvent.type)
+		{
+			processMouseMove(newEvent);
+		}
+		if (sf::Event::MouseButtonReleased == newEvent.type)
+		{
+			procerssMouseUp(newEvent);
+		}
 	}
 }
 
@@ -116,10 +124,18 @@ void Game::processMouseDown(sf::Event t_event)
 
 void Game::processMouseMove(sf::Event t_event)
 {
+	if (m_aiming)
+	{
+		m_mouseEnd.x = static_cast<float>(t_event.mouseMove.x);
+		m_mouseEnd.y = static_cast<float>(t_event.mouseMove.y);
+		setAimLine();
+	}
 }
 
-void Game::procerssMouseUP(sf::Event t_event)
+void Game::procerssMouseUp(sf::Event t_event)
 {
+	m_aiming = false;
+	m_aimLine.clear();
 }
 
 /// <summary>
@@ -282,6 +298,16 @@ void Game::animateTarget()
 
 void Game::setAimLine()
 {
+	float angleD; // degrees
+	float angleR; // radians
+	sf::Vector2f line;
+
+	line = m_mouseEnd - m_canonEnd;
+	angleR = std::atan2f(line.y, line.x);
+	angleD = angleR * 180.0f / 3.14f;
+	m_canon.setRotation(angleD +90.0f);
+
+
 	sf::Vertex point;
 	point.color = sf::Color::Black;
 	m_aimLine.clear();
