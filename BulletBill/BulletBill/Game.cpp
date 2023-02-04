@@ -111,7 +111,7 @@ void Game::processKeys(sf::Event t_event)
 
 void Game::processMouseDown(sf::Event t_event)
 {
-	if (!m_aiming)
+	if (!m_aiming && !m_firing)
 	{
 		m_mouseEnd.x = static_cast<float>(t_event.mouseButton.x);
 		m_mouseEnd.y = static_cast<float>(t_event.mouseButton.y);
@@ -159,6 +159,7 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_firing)
 	{
 		moveBall();
+		m_firing = checkGround(m_ballLocation);
 	}
 	moveTarget();
 	animateTarget();
@@ -187,6 +188,7 @@ void Game::render()
 		}
 		m_window.draw(m_target);
 	}
+	m_window.draw(m_missMessage);
 	m_window.display();
 }
 
@@ -207,6 +209,13 @@ void Game::setupFontAndText()
 	m_welcomeMessage.setOutlineColor(sf::Color::Red);
 	m_welcomeMessage.setFillColor(sf::Color::Black);
 	m_welcomeMessage.setOutlineThickness(3.0f);
+
+	m_missMessage.setCharacterSize(20U);
+	m_missMessage.setPosition(40.0f, 110.0f);
+	m_missMessage.setFillColor(sf::Color::Blue);
+	m_missMessage.setFont(m_ArialBlackfont);
+	m_missMessage.setString("Misses:");
+
 
 }
 
@@ -340,7 +349,21 @@ void Game::setAimLine()
 
 void Game::moveBall()
 {
+	m_ballVelocity += m_gravity;
 	m_ballLocation += m_ballVelocity;
 	m_ball.setPosition(m_ballLocation);
 
+}
+
+bool Game::checkGround(sf::Vector2f t_location)
+{
+	if (t_location.y > 600.0f || t_location.x < 0.0f || t_location.x > 800.0f)
+	{
+		m_ballLocation = sf::Vector2f{ 100.0f,550.0f };
+		m_ball.setPosition(m_ballLocation);
+		m_misses++;
+		m_missMessage.setString("Misses: " + std::to_string(m_misses));
+		return false;
+	}
+	return true;
 }

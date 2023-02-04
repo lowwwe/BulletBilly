@@ -37,6 +37,7 @@ private:
 	void animateTarget();
 	void setAimLine();
 	void moveBall();
+	bool checkGround(sf::Vector2f t_location);
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -44,6 +45,10 @@ private:
 	sf::Texture m_logoTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
+
+	sf::Text m_missMessage;
+	int m_misses{ 0 }; // count missed shots
+	sf::Text m_hitMessage;
 
 	sf::RectangleShape m_wall; // box for the wall
 	sf::RectangleShape m_target;// box for target to fire at
@@ -64,6 +69,7 @@ private:
 	sf::CircleShape m_ball; // canon ball
 	sf::Vector2f m_ballLocation; // ball position
 	sf::Vector2f m_ballVelocity; // ball movement vector
+	sf::Vector2f m_gravity{ 0.0f,0.05f }; // accelerate donward
 
 	sf::VertexArray m_aimLine{ sf::Lines }; // line to show path
 	bool m_aiming{ false }; // are we aiming
