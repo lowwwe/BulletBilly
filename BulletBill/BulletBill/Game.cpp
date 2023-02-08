@@ -256,25 +256,62 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
-	m_ball.setFillColor(sf::Color::Red);
-	m_ball.setRadius(10.0f);
-	m_ball.setOrigin(10.0f, 10.0f);
-	m_ballLocation = sf::Vector2f{ 100.0f, 550.0f };
-	m_ball.setPosition(m_ballLocation);
-
-
-	m_canon.setFillColor(sf::Color::Black);
-	m_canon.setSize(sf::Vector2f{ 20.0f,70.0f });
-	m_canon.setPosition(100.0f,550.0f);
-	m_canon.setOrigin(10.0f, 35.0f);
-	m_canon.setRotation(45.0f);
-
+	setupCannon();
+	setupGravity();
+	setupTarget();
+	
 	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
 	{
 		std::cout << "problew with background" << std::endl;
 	}
 	m_backgropundSprite.setTexture(m_backgroundTexture);
 
+	
+	
+}
+
+void Game::setupCannon()
+{
+	m_ball.setFillColor(sf::Color::Red);
+	m_ball.setRadius(10.0f);
+	m_ball.setOrigin(10.0f, 10.0f);
+	m_ballLocation = sf::Vector2f{ 100.0f, 550.0f };
+	m_ball.setPosition(m_ballLocation);
+
+	m_canon.setFillColor(sf::Color::Black);
+	m_canon.setSize(sf::Vector2f{ 20.0f,70.0f });
+	m_canon.setPosition(100.0f, 550.0f);
+	m_canon.setOrigin(10.0f, 35.0f);
+	m_canon.setRotation(45.0f);
+
+	if (!m_baseTexture.loadFromFile("ASSETS\\IMAGES\\base.png"))
+	{
+		std::cout << "proiblem with base" << std::endl;
+	}
+	m_baseSprite.setTexture(m_baseTexture);
+	m_baseSprite.setPosition(70.0f, 531.0f);
+
+	if (!m_barrellTexture.loadFromFile("ASSETS\\IMAGES\\barrel.png"))
+	{
+		std::cout << "problem with barrell" << std::endl;
+	}
+	m_barrellSprite.setTexture(m_barrellTexture);
+	m_barrellSprite.setOrigin(22.0f, 45.0f);
+	m_barrellSprite.setRotation(45.0f);
+	m_barrellSprite.setPosition(100.0f, 550.0f);
+
+	if (!m_bulletTexture.loadFromFile("ASSETS\\IMAGES\\bullet.png"))
+	{
+		std::cout << " problem with bullet" << std::endl;
+	}
+	m_bulletSprite.setTexture(m_bulletTexture);
+	m_bulletSprite.setOrigin(20.0f, 20.0f);
+	m_bulletSprite.setRotation(45.0f);
+	m_bulletSprite.setPosition(100.0f, 550.0f);
+}
+
+void Game::setupTarget()
+{
 	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\wall.jpg"))
 	{
 		std::cout << "problem with wall" << std::endl;
@@ -303,16 +340,10 @@ void Game::setupSprite()
 	m_gumbaSprite.setTextureRect(sf::IntRect{ 0,0,52,54 });
 	m_gumbaSprite.setScale(-1.0f, 1.0f);
 	m_gumbaSprite.setOrigin(52.0f, 0.0f);
-	
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
-	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
-	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition(300.0f, 180.0f);
+}
 
-
+void Game::setupGravity()
+{
 	m_gravityBar.setFillColor(sf::Color::Blue);
 	m_gravityBar.setSize(sf::Vector2f{ 20.0f,60.0f });
 	m_gravityBar.setPosition(760.0f, 40.0f);
@@ -324,30 +355,7 @@ void Game::setupSprite()
 	m_arrowSprite.setTexture(m_arrowTexture);
 	m_arrowSprite.setPosition(m_gravityBar.getPosition());
 
-	if (!m_baseTexture.loadFromFile("ASSETS\\IMAGES\\base.png"))
-	{
-		std::cout << "proiblem with base" << std::endl;
-	}
-	m_baseSprite.setTexture(m_baseTexture);
-	m_baseSprite.setPosition(70.0f, 531.0f);
 
-	if (!m_barrellTexture.loadFromFile("ASSETS\\IMAGES\\barrel.png"))
-	{
-		std::cout << "problem with barrell" << std::endl;
-	}
-	m_barrellSprite.setTexture(m_barrellTexture);
-	m_barrellSprite.setOrigin(22.0f, 45.0f);
-	m_barrellSprite.setRotation(45.0f);
-	m_barrellSprite.setPosition(100.0f, 550.0f);
-
-	if (!m_bulletTexture.loadFromFile("ASSETS\\IMAGES\\bullet.png"))
-	{
-		std::cout << " problem with bullet" << std::endl;
-	}
-	m_bulletSprite.setTexture(m_bulletTexture);
-	m_bulletSprite.setOrigin(20.0f, 20.0f);
-	m_bulletSprite.setRotation(45.0f);
-	m_bulletSprite.setPosition(100.0f, 550.0f);
 }
 
 void Game::moveTarget()

@@ -33,6 +33,9 @@ private:
 
 	void setupFontAndText();
 	void setupSprite();
+	void setupCannon();
+	void setupTarget();
+	void setupGravity();
 	void moveTarget();
 	void animateTarget();
 	void setAimLine();
