@@ -107,6 +107,14 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_graphics = !m_graphics;
 	}
+	if (sf::Keyboard::Add == t_event.key.code)
+	{
+		adjustGravity(0.005f);
+	}
+	if (sf::Keyboard::Subtract == t_event.key.code)
+	{
+		adjustGravity(-0.005f);
+	}
 }
 
 void Game::processMouseDown(sf::Event t_event)
@@ -184,9 +192,11 @@ void Game::render()
 		m_window.draw(m_backgropundSprite);
 		m_window.draw(m_wallSprite);
 		m_window.draw(m_gumbaSprite);
+		m_window.draw(m_arrowSprite);
 	}
 	else
 	{
+		m_window.draw(m_gravityBar);
 		m_window.draw(m_canon);
 		m_window.draw(m_ball);
 		m_window.draw(m_wall);
@@ -293,6 +303,19 @@ void Game::setupSprite()
 	}
 	m_logoSprite.setTexture(m_logoTexture);
 	m_logoSprite.setPosition(300.0f, 180.0f);
+
+
+	m_gravityBar.setFillColor(sf::Color::Blue);
+	m_gravityBar.setSize(sf::Vector2f{ 20.0f,60.0f });
+	m_gravityBar.setPosition(760.0f, 40.0f);
+
+	if (!m_arrowTexture.loadFromFile("assets\\images\\arrow.png"))
+	{
+		std::cout << "problem with arrow" << std::endl;
+	}
+	m_arrowSprite.setTexture(m_arrowTexture);
+	m_arrowSprite.setPosition(m_gravityBar.getPosition());
+
 }
 
 void Game::moveTarget()
@@ -406,4 +429,13 @@ bool Game::checkCollision(sf::CircleShape& t_ball, sf::RectangleShape& t_block, 
 
 
 	return result;
+}
+
+void Game::adjustGravity(float t_adjustment)
+{
+	float magnitude;
+	m_gravity.y += t_adjustment;
+	magnitude = m_gravity.y * 500.0f + 35.0f;
+	m_gravityBar.setSize(sf::Vector2f{ 20.0f, magnitude });
+	m_arrowSprite.setScale(1.0f, magnitude/60.0f);
 }
