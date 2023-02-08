@@ -36,6 +36,7 @@ private:
 	void moveTarget();
 	void animateTarget();
 	void setAimLine();
+	void drawAimLine();
 	void moveBall();
 	bool checkGround(sf::Vector2f t_location);
 	bool checkCollision(sf::CircleShape& t_ball, sf::RectangleShape& t_block, bool t_target);
