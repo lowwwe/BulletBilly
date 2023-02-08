@@ -193,6 +193,8 @@ void Game::render()
 		m_window.draw(m_wallSprite);
 		m_window.draw(m_gumbaSprite);
 		m_window.draw(m_arrowSprite);
+		m_window.draw(m_barrellSprite);
+		m_window.draw(m_baseSprite);
 	}
 	else
 	{
@@ -316,6 +318,21 @@ void Game::setupSprite()
 	m_arrowSprite.setTexture(m_arrowTexture);
 	m_arrowSprite.setPosition(m_gravityBar.getPosition());
 
+	if (!m_baseTexture.loadFromFile("ASSETS\\IMAGES\\base.png"))
+	{
+		std::cout << "proiblem with base" << std::endl;
+	}
+	m_baseSprite.setTexture(m_baseTexture);
+	m_baseSprite.setPosition(70.0f, 531.0f);
+
+	if (!m_barrellTexture.loadFromFile("ASSETS\\IMAGES\\barrel.png"))
+	{
+		std::cout << "problem with barrell" << std::endl;
+	}
+	m_barrellSprite.setTexture(m_barrellTexture);
+	m_barrellSprite.setOrigin(22.0f, 45.0f);
+	m_barrellSprite.setRotation(45.0f);
+	m_barrellSprite.setPosition(100.0f, 550.0f);
 }
 
 void Game::moveTarget()
@@ -372,6 +389,7 @@ void Game::setAimLine()
 	angleR = std::atan2f(line.y, line.x);
 	angleD = angleR * 180.0f / 3.14f;
 	m_canon.setRotation(angleD +90.0f);
+	m_barrellSprite.setRotation(angleD + 90.0f);
 
 
 	sf::Vertex point;
