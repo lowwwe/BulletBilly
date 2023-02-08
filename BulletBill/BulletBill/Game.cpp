@@ -193,6 +193,7 @@ void Game::render()
 		m_window.draw(m_wallSprite);
 		m_window.draw(m_gumbaSprite);
 		m_window.draw(m_arrowSprite);
+		m_window.draw(m_bulletSprite);
 		m_window.draw(m_barrellSprite);
 		m_window.draw(m_baseSprite);
 	}
@@ -333,6 +334,15 @@ void Game::setupSprite()
 	m_barrellSprite.setOrigin(22.0f, 45.0f);
 	m_barrellSprite.setRotation(45.0f);
 	m_barrellSprite.setPosition(100.0f, 550.0f);
+
+	if (!m_bulletTexture.loadFromFile("ASSETS\\IMAGES\\bullet.png"))
+	{
+		std::cout << " problem with bullet" << std::endl;
+	}
+	m_bulletSprite.setTexture(m_bulletTexture);
+	m_bulletSprite.setOrigin(20.0f, 20.0f);
+	m_bulletSprite.setRotation(45.0f);
+	m_bulletSprite.setPosition(100.0f, 550.0f);
 }
 
 void Game::moveTarget()
@@ -348,7 +358,7 @@ void Game::moveTarget()
 		m_gumbaSprite.setOrigin(52.0f, 0.0f);
 	}
 	if (m_targetLocation.x > RIGHT_EDGE)
-	{
+	{ 
 		m_targetVelocity.x = -SPEED;
 		m_gumbaSprite.setScale(1.0f, 1.0f);
 		m_gumbaSprite.setOrigin(0.0f, 0.0f);
@@ -404,9 +414,14 @@ void Game::setAimLine()
 
 void Game::moveBall()
 {
+	float angle;
 	m_ballVelocity += m_gravity;
 	m_ballLocation += m_ballVelocity;
 	m_ball.setPosition(m_ballLocation);
+	m_bulletSprite.setPosition(m_ballLocation);
+	angle = std::atan2(m_ballVelocity.y, m_ballVelocity.x);
+	angle = angle * 180.0f / 3.14f;
+	m_bulletSprite.setRotation(angle + 90.0f);
 
 }
 
